@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+const { program } = require('commander');
 const {
     Connection,
     Keypair,
@@ -11,6 +12,17 @@ const {
 } = require('@solana/web3.js');
 const fs = require('fs');
 const path = require('path');
+
+// Setup commander to handle CLI arguments
+program
+    .version('1.0.0')
+    .description('Solana CLI Tool')
+    .option('-r, --recipient <address>', 'Recipient public key address')
+    .option('-a, --airdrop', 'Request an airdrop')
+    .option('-b, --balance', 'Get balance of the keypair')
+    .option('-s, --send <amount>', 'Send specified amount of SOL to recipient', parseFloat).parse(process.argv);
+
+const options = program.opts();
 
 // Create a connection to the Solana Devnet cluster
 const connection = new Connection("https://api.devnet.solana.com", "confirmed");
@@ -85,13 +97,20 @@ const sendSol = async (keypair, recipient, amountSol) => {
     }
 };
 
-// Main function to run the CLI commands
 const main = async () => {
     await loadOrGenerateKeypair(); // Ensure the keypair is loaded or generated first
-    await getBalance(publicKey); // Fetch balance for the generated keypair
-    // await getAirdrop(publicKey); // Request an airdrop
-    const recipientPublicKey = '5XStL2y7A9jhHQU3qAoFLoYzvipCoqT3ixfg9or8VUaK'; // Replace with actual recipient public key
-    await sendSol(keypair, recipientPublicKey, 0.5); // Send 0.1 SOL to the recipient
+
+    if (options.balance) {
+        await getBalance(publicKey); // Fetch balance for the generated keypair
+    }
+
+    if (options.airdrop) {
+        await getAirdrop(publicKey); // Request an airdrop
+    }
+
+    if (options.send !== undefined) {
+        await sendSol(keypair, options.recipient, options.send); // Send specified amount of SOL to the recipient
+    }
 };
 
 main();
