@@ -28,15 +28,21 @@ chmod +x your-cli-script.js
 
 ## Usage
 You can use the CLI tool with different options to perform various operations. The available options are:
-
+```sh
 -a, --airdrop: Request an airdrop of 1 SOL to the keypair.
 -b, --balance: Get the balance of the keypair.
 -r, --recipient <address>: Recipient public key address for sending SOL.
 -s, --send <amount>: Send the specified amount of SOL to the recipient.
+```
 
 ##Examples usage for a transaction:
-1. node wallet.js --recipient 5XStL2y7A9jhHQU3qAoFLoYzvipCoqT3ixfg9or8VUaK --send 1.9
+
+```sh
+node wallet.js --recipient 5XStL2y7A9jhHQU3qAoFLoYzvipCoqT3ixfg9or8VUaK --send 1.9
+```
+Output:
+```sh
 Loaded existing keypair. Public key: 3YynBw2VM1WpDr9MzAb5gBToGJ5pPLsCdRT1aYe5Z6UC
 Sent 1.9 SOL to 5XStL2y7A9jhHQU3qAoFLoYzvipCoqT3ixfg9or8VUaK
 Transaction: https://explorer.solana.com/tx/3ay5KAHZJzjJoM5iyKeAifHGzGEcrJruzjufkrSSx2AGCsUNumabMJMmDYWfdHdsgrWipAfFpnscTP2462f8XUxf?cluster=devnet
-
+```
